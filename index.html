@@ -186,7 +186,7 @@
 
 	<form >
 		<div id="title">
-			Holmstad Library Search<label style="float:right;">10.5</label>
+			XREF Search<label style="float:right;">10.5</label>
 		</div>
 		<fieldset>
 			<div style="padding-bottom:5px;">
@@ -200,6 +200,14 @@
 
 			<div class="filetable" style="padding-bottom:5px;">
 				<div style="padding-bottom:5px;">
+					<!--<label for="sfont" style="float:left;"> <strong>Sun font&nbsp</strong></label>
+					<input id='sfont' type='text' size="10">
+					<select id = "selFont" onChange="optChangeFont()">
+						   <option value = "SUNBF921_10_6_EN"  >SUNBF921_10_6_EN</option>
+						   <option value = "SUN921_10_6" selected>SUN921_10_6</option>
+					</select>
+					-->
+					
 					<label style='float:center;' > <strong>&nbspSearch Type&nbsp</strong>
 						<span id="radiospan" style="border:1px; border-style:solid; ">
 							<input type="radio" id="wordsrch" name="wsrch" value="word" onClick="setSrch(false)">
@@ -348,16 +356,58 @@ var process_wb = (function() {
 		var output = "";
         csv = to_csv(wb);
 		output = csvToArray(csv);
-		console.log(output)
+
+		// remove empty lines
+		csvArry = [];
+		arryLen = [];
+/*
+		for (line of output) {
+			// use filter() array method
+			// and return the element which is being looped
+			const newArry = line.filter((a) => a);
+			console.log(newArry); // [1, 2, 3, 4, 56, "text", 67] ✅
+			if (newArry.length > 0) {
+				//csvArry.push(newArry)
+				csvArry.push(line);
+				for (x= 0; x < line.length; x++) {
+					arryLen[x] = arryLen[x]+ 1;
+				}
+			}
+		}
+*/		
+		console.log(output[5], output[5].length);		// Assume table is longer than 5 lines
+		for (x= 0; x < output[2].length; x++) {
+			console.log(x);
+			arryLen.push(0);
+		}
+		console.log(arryLen);
+			
+		idx = 0;
+		for (line of output) {
+			// use filter() array method
+			// and return the element which is being looped
+			const newArry = line.filter((a) => a);
+			console.log(newArry); 
+			if (newArry.length > 0) {
+				//csvArry.push(newArry)
+				csvArry.push(line);
+				//delete output[idx]
+				for (x= 0; x < line.length; x++) {
+					console.log(x);
+					if (line[x].length > 0)
+						arryLen[x] +=1; 
+				}
+			}
+			idx+=1;
+		}
+
+			
+		
+		console.log(arryLen);
+		console.log(csvArry);
 		//if (CSV) output = fixUnicode(output);
-		generateTable(output);
-		//var ta = performance.now();
-		//for ( i = 0; i < 3; i++){
-		//table_mismatch();
-		//}
-		//sortTable();
-		//var tb = performance.now();
-		//console.log("2nd delay "+ (tb - ta) + " milliseconds.");
+		generateTable(csvArry, arryLen);
+
 		var t1 = performance.now();
 		console.log("process_wb "+ (t1 - t0) + " milliseconds.");
 	};

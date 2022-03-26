@@ -46,7 +46,7 @@ function findCol(arry) {
 	console.log("findCol " + (t1 - t0) + " milliseconds.");
 }
 
-function generateTable(lines){
+function generateTable(lines, colLen){
 	//Clear previous data
 	//findCol(lines)
 	console.log('generateTable');
@@ -72,35 +72,14 @@ function generateTable(lines){
 		var th = document.createElement("TH");
 		th.appendChild(document.createTextNode('col '+j));
 		var fontCol = 0;
-/*
-		if (j === fontCol) {
-			th.className = "fonticon";
-			th.innerHTML = "Font";
-		}
-		if (j === uniCol) {
-			th.className = "unicol";
-			th.innerHTML = "Unicode";
-		}
-		if (j === nameCol) {
-			th.className = "nameCol";
-			th.innerHTML = "Name";
-		}
-		if (j === synCol) {
-			th.className = "synCol";
-			th.innerHTML = "Reference";
-		}
-		if (j === xrefCol) {
-			th.className = "xrefCol";
-			th.innerHTML = "XRef";
-		}
-		row.appendChild(th);
-		*/
+		if (colLen[j] < 2) th.style.display = "none";
+
 	}
 
 	
 	table.appendChild(row);
 	var tbody = document.createElement('TBODY');
-	for (var i = 1; i < lines.length; i++) {  // get line
+	for (var i = 0; i < lines.length; i++) {  // get line
 		if (lines[i].length > 1) {	// process row
 			var row = document.createElement('TR');
 			row.className = "item";
@@ -111,35 +90,8 @@ function generateTable(lines){
 				var text = "";
 				var td = document.createElement("TD");
 				if (lines[i][j]) text = lines[i][j].trim();
-				/*
-				if (j ===fontCol) {
-					td.className = "fonticon";
-					c0 = lines[i][fontCol].charCodeAt(0).toString(16).toLowerCase();
-				}
-				if (j === uniCol) {
-					td.className = "unicol";
-					c1 = lines[i][uniCol].toLowerCase();
-				}
-				if (j === nameCol) {
-					td.className = "nameCol";
-				}
-				if (j === synCol) {
-					td.className = "synCol";
-				}
-				if (j === xrefCol) {
-					td.className = "xrefCol";
-					xu = lines[i][xrefCol].slice(-1).charCodeAt(0).toString(16).toLowerCase()
-					if (xu === 'f09e') {
-						row.className = "nameerror";
-						errText = lines[i][nameCol].trim();
-						console.log('not equal',errText)
-						var errdata = "Name error = " +errText+"\ndoes not match kmn file";
-						row.setAttribute("rowdata", errdata);
-						dispModal(row, fontCol, uniCol);
-					}
-					
-				}
-				*/
+				if (colLen[j] < 2) td.style.display = "none";
+
 				td.appendChild(document.createTextNode(text));
 				row.appendChild(td);
 			}  // end column process
@@ -226,8 +178,8 @@ function jscsvToArray(text) {
 
 function csvToArray(text) {
 	var t0 = performance.now();
-    let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, line;
-   for (line of text) {
+	let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, line;
+	for (line of text) {
 	    if ('"' === line) {
             if (s && line === p) {
 				row[i] += line;
@@ -244,9 +196,10 @@ function csvToArray(text) {
 			row[i] += line;
 		}
         p = line;
-    }
-	//console.log('csv2array',ret[4]);
+	}
+	
 	var t1 = performance.now();
+		
 	console.log("csvToArray " + (t1 - t0) + " milliseconds.");
     return ret;
 };
