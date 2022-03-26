@@ -195,12 +195,18 @@
 				<!--<label style="float:right;">Debug&nbsp
 					<input type="checkbox" id="showdebug"  onclick="showDebug();">
 				</label>-->
-
 				<div id="drop">Or drop file here</div>
 			</div>
 
 			<div class="filetable" style="padding-bottom:5px;">
 				<div style="padding-bottom:5px;">
+					<!--<label for="sfont" style="float:left;"> <strong>Sun font&nbsp</strong></label>
+					<input id='sfont' type='text' size="10">
+					<select id = "selFont" onChange="optChangeFont()">
+						   <option value = "SUNBF921_10_6_EN"  >SUNBF921_10_6_EN</option>
+						   <option value = "SUN921_10_6" selected>SUN921_10_6</option>
+					</select>
+					-->
 					
 					<label style='float:center;' > <strong>&nbspSearch Type&nbsp</strong>
 						<span id="radiospan" style="border:1px; border-style:solid; ">
@@ -210,6 +216,8 @@
 							<label for="charsrch">Char&nbsp</label>
 						</span>
 					</label>
+					<!--<input type="button" id="showerr" style='float: right;' onclick="showError();"  >
+					<label id="splitlabel" for="showerr" style='float: right;'> <strong>Errors<br>Only &nbsp  </strong></label>-->
 										
 				</div>
 
@@ -232,7 +240,6 @@
 
 <div id="output">
 Holmstad Library
-
 </div>
 
 <footer>
@@ -281,16 +288,10 @@ var colValues =[];
 
 window.addEventListener('DOMContentLoaded', (event) => {
 	console.log('DOM fully loaded')
-	document.getElementById("output").innerHTML ="The full URL of this page is:<br>" + window.location.href;
 	//fval = document.getElementById('selFont').value;
 	//changeFont(fval);
-	//Download();
-});
 
-function Download() {
-	alert('download');
-    document.getElementById('download_iframe').src = "Input/bookcards.xlsx";
-};
+});
 
 /*
 var csvData = 'Test Data\n'
