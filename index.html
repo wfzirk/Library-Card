@@ -10,177 +10,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <title>Search Holmstad Library</title>
-<style>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 
-	html { height:100%; }
-		
-	body {
-		height: 100%;
-		width = 600px;
-		line-height: normal;
-		
-	}
-	#title {
-		font-size: 20px;
-		text-align: center;
-		font-weight: bold;
-	}
-	
-	#title label {
-		font-size:12px;
-	}
-	
-	footer {
-		color: lightgray;
-	}
-
-	div.filetable {
-		width: 100%
-	}	
-	
-	#output {
-		font-family: var(--sun-font); 
-		height: 65%;
-		overflow-y: scroll;
-		scroll-behavior: smooth; 
-	}
-	
-	#splitlabel {
-		font-size: 10px;
-		font-weight: bold;
-	}
-	#lblclear {
-		font-size: 12px;
-		font-weight: bold;
-	}
-	
-	table.xreftable {
-		 border-width: 1px;
-		 border-spacing: 0;
-		 border-style: outset;
-		 border-color: black;
-		 border-collapse: separate; 
-		 background-color: white; 
-		 font-size: 14px;
-		 table-layout: fixed;
-		 margin-bottom: 5px;
-		 width: 100%; 
-		 empty-cells: show;
-
-	}
-	
-	.xreftable caption {
-		color: green;
-	}
-	
-	.xreftable tr {
-		vertical-align: middle;
-		padding-top: 5px;
-	}
-
-	.xreftable td, .xreftable th {
-		border-width: 1px;
-		padding: 1px;
-		border-style: inset;
-		border-color: lightblue;
-		font-size: 14px;
-		word-wrap: break-word;
-		min-width: 50px;
-	}
-
-		 /*Table Even Rows Styles*/
-	 .xreftable tbody, .xreftable tr:nth-child(even){
-		 background-color: #efefef;
-	 }
-
-		 /*Table ODD Rows Styles*/
-	 .xreftable tbody, .xreftable tr:nth-child(odd){
-		 background-color: #dfdfdf;
-	 }
-
-		 /*Table Row HOver Style*/
-	 .xreftable table, .xreftable tbody, .xreftable tr:hover{
-		 background-color: #ffffd8;
-	 }
-
-
-	#drop{
-		border:2px dashed #bbb;
-		border-radius:5px;
-		padding:5px;
-		text-align:center;
-		font:20pt bold,"Vollkorn";color:#bbb
-	}
-	
-
-	/* The Modal (background) */
-	.modal {
-	  display: none; /* Hidden by default */
-	  position: fixed; /* Stay in place */
-	  z-index: 1; /* Sit on top */
-	  padding-top: 100px; /* Location of the box */
-	  left: 0;
-	  top: 0;
-	  width: 100%; /* Full width */
-	  height: 100%; /* Full height */
-	  overflow: auto; /* Enable scroll if needed */
-	  background-color: rgb(0,0,0); /* Fallback color */
-	  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-	}
-
-	/* Modal Content */
-	.modal-content {
-	  position: relative;
-	  background-color: #eeeeee;
-	  margin: auto;
-	  padding: 0;
-	  border: 1px solid #888;
-	  border-radius:5px;
-	  width: 300px;;
-	  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-	  -webkit-animation-name: animatetop;
-	  -webkit-animation-duration: 0.4s;
-	  animation-name: animatetop;
-	  animation-duration: 0.4s
-	}
-
-	/* Add Animation */
-	@-webkit-keyframes animatetop {
-	  from {top:-300px; opacity:0} 
-	  to {top:0; opacity:1}
-	}
-
-	@keyframes animatetop {
-	  from {top:-300px; opacity:0}
-	  to {top:0; opacity:1}
-	}
-
-	/* The Close Button */
-	.close {
-	  color: white;
-	  float: right;
-	  font-size: 28px;
-	  font-weight: bold;
-	}
-
-	.close:hover,
-	.close:focus {
-	  color: #000;
-	  text-decoration: none;
-	  cursor: pointer;
-	}
-
-	.modal-header {
-	  padding: 1px 5px;
-	  background-color: red;
-	  color: white;
-	  font-size: 28px;
-	  font-weight: bold;
-	}
-
-	.modal-body {padding: 2px 16px;}
-
-</style>
 </head>
 <body>
 
@@ -198,7 +29,12 @@
 
 				<div id="drop">Or drop file here</div>
 			</div>
-
+<!--			
+<form method="post" enctype="multipart/form-data">
+  <input type="file" name="files[]" multiple />
+  <input type="submit" value="Upload File" name="submit" />
+</form>
+-->
 			<div class="filetable" style="padding-bottom:5px;">
 				<div style="padding-bottom:5px;">
 					
@@ -217,10 +53,9 @@
 					<label for="xsearch;" span style='float:left;'> <strong>Search Words &nbsp</strong></label>
 						<input id='xsearch' onkeyup='search_Table("xref1")' type='text' size="40">
 
-					<!--<button type="submit"  onclick='clearTable()'<img> Clear</button>-->
-					<button   onclick='clearTable()'<img> Clear</button>
+					<button  type="button" onclick="clearSearch()"> Clear</button>
 					<!--<button type="submit" style='float:right;' onclick='dnldCSV()'<img> Download CSV</button> -->
-											
+					<select id="libKeys">onChange="getSheet(this.value)"</select>						
 				</div>
 			</div>
 		</fieldset>
@@ -264,6 +99,7 @@ Holmstad Library
 <!-- <script src="js/cookie.js"></script> -->
 <script src="js/table.js" id="tbl"></script>
 <script src="js/modal.js"></script>
+<!--<script src="js/upload.js"></script> -->
 <!--<script src="js/convertuni.js"></script>-->
 <!--<script src="sun.js" > </script> -->
 <!-- https://stackoverflow.com/questions/1017424/pass-vars-to-javascript-via-the-src-attribute  -->
@@ -277,7 +113,7 @@ var CSV = false;
 var global_wb;
 var srchType = document.querySelector('input[name = wsrch]:checked').value
 var colValues =[];
-
+var libDict;
 
 window.addEventListener('DOMContentLoaded', (event) => {
 	console.log('DOM fully loaded')
@@ -292,61 +128,102 @@ function Download() {
     document.getElementById('download_iframe').src = "Input/bookcards.xlsx";
 };
 
-/*
-var csvData = 'Test Data\n'
-+ '"","questioned","e061","mouth,said,speak: ?","ask"\n'
-+ '"","ashamed","e05f","no,not: mouth: heart",\n'
-+ '"","loaf","e05d","mouth,said,speak: grain,wheat","bread"\n'
-+ '"","boy","e001","small,few: man",\n'
-+ '"me poss","mine",,,"ours:my:our"\n'
-+ '"","blaspheme","e05b","mouth,said,speak,confessiom: bad: no,not: good: king,crown,ruler,lord,master: man: love,compassion","insult:blasphemy"\n'
-+ '"","Apelles","ebcd","man:split,divide,division,separate","looks_like"\n'
-+ '"","Levi","eb1b","man: with: equal,same: people",\n'
-+ '"","chariot","EC82","horse: chair,sit",\n'
-+ '"","Cilicia","EB5B","hair: face: fabric,clothing: land,ground,earth",\n'
-+ '"","Nahor","EC6E","man: air",\n';
-*/
-
-function xfixUnicode(lines) {
-	console.log('fix');
-	var t0 = performance.now();
-
-	for (var i = 0; i < lines.length; i ++) {
-		rowx = lines[i]
-			j = 0
-			var uni = rowx[j];
-			if (uni.length === 3) {
-				var hArry = toHexArray(uni);
-				uni = convertUTF82CP(hArry).toLowerCase();
-				var char = unescape('%u' + uni);
-				lines[i][j] = char;
-			}
+function libList() {
+	var select = document.getElementById("libKeys");
+	select.innerHTML = "";
+	for (elmts in libDict) {
+		var optn = elmts;
+		//if (optn == "Sheet1") continue;
+		var el = document.createElement("option");
+		el.textContent = optn;
+		el.value = optn;
+		if (optn == "Book Cards") el.selected = true;
+		select.appendChild(el);
 	}
-	console.log('csvfix',lines);
+}
+
+var sel = document.getElementById('libKeys');
+sel.addEventListener('change', function (e) {
+	var value = sel.options[sel.selectedIndex].value;
+	removeEmptyLines(libDict[value]);
+});
+
+function removeEmptyLines(arry) {
+// ===============  remove empty columns and rows
+	var t0 = performance.now();
+	clearTable();
+	csvArry = [];
+	arryLen = [];
+	maxLen = []
+	output = csvToArray(arry);
+	console.log(output.length, output[0].length);
+
+	for (x= 0; x < output[2].length; x++) {
+		arryLen.push(0);
+		maxLen.push(0);
+	}
+
+	for (line of output) {
+		// use filter() array method
+		// and return the element which is being looped
+		const newArry = line.filter((a) => a);
+		//console.log(newArry); 
+		if (newArry.length > 0) {
+			csvArry.push(line);
+			for (x= 0; x < line.length; x++) {
+				if (line[x].length > 0)
+					arryLen[x] +=1; 
+					maxLen[x] = Math.max(line[x].length, maxLen[x]);
+			}
+		}
+	}
+//==================================
+
+	console.log('maxlen array',maxLen);
+	longest = Math.max(...maxLen);
+	shortest = Math.min(...maxLen);
+	console.log('longest, shortest',longest, shortest);
+	relLen = [];
+	//zi = (xi – min(x)) / (max(x) – min(x)) * Q
+	for (x = 0; x < maxLen.length; x++) {
+		//relLen.push((maxLen[x]/longest)*100);
+		m = ((maxLen[x] - shortest)/(longest-shortest)) * 100 
+		relLen.push(Math.round(m));
+	}
+	console.log('rellen',relLen);
+	console.log('arrylen',arryLen);
+
+	generateTable(csvArry, arryLen);
+
 	var t1 = performance.now();
-	console.log("fixUnicode " + (t1 - t0) + " milliseconds.");
-	return lines;
+		console.log("removeEmptyLines "+ (t1 - t0) + " milliseconds.");
 }
 
 var process_wb = (function() {
-	var OUT = document.getElementById('output');
+	//var OUT = document.getElementById('output');
+	libDict = {};
+
 	var to_csv = function to_csv(workbook) {
 		var t0 = performance.now();
-		var result = [];
+		libDict = {};
 		workbook.SheetNames.forEach(function(sheetName) {
 			var csv = X.utils.sheet_to_csv(workbook.Sheets[sheetName]);
-			//var csv = X.utils.sheet_to_json(workbook.Sheets[sheetName], {header:1, raw:true});
-			if(csv.length){
-				result.push("SHEET: " + sheetName);
-				result.push("");
-				result.push(csv);
-			}
+			libDict[sheetName] = csv;
+			//console.log(csv);
+			console.log("sheetname", sheetName);
 		});
+		
 		var t1 = performance.now();
 		console.log("to_csv " + (t1 - t0) + " milliseconds.");
-		return result.join("\n");
+		//return result.join("\n");
+		console.log(Object.keys(libDict));
+		//console.log(libDict["Sheet1"]);
+		libList();
+		//if (Object.keys(libDict).length == 1) return libDict["Sheet1"];
+		if (CSV) return libDict["Sheet1"];
+		else return libDict["Book Cards"];
+	
 	};
-
 
 	return function process_wb(wb) {
 		var t0 = performance.now();
@@ -354,59 +231,7 @@ var process_wb = (function() {
 		global_wb = wb;
 		var output = "";
         csv = to_csv(wb);
-		output = csvToArray(csv);
-
-		// remove empty lines
-		csvArry = [];
-		arryLen = [];
-/*
-		for (line of output) {
-			// use filter() array method
-			// and return the element which is being looped
-			const newArry = line.filter((a) => a);
-			console.log(newArry); // [1, 2, 3, 4, 56, "text", 67] ✅
-			if (newArry.length > 0) {
-				//csvArry.push(newArry)
-				csvArry.push(line);
-				for (x= 0; x < line.length; x++) {
-					arryLen[x] = arryLen[x]+ 1;
-				}
-			}
-		}
-*/		
-		console.log(output[5], output[5].length);		// Assume table is longer than 5 lines
-		for (x= 0; x < output[2].length; x++) {
-			console.log(x);
-			arryLen.push(0);
-		}
-		console.log(arryLen);
-			
-		idx = 0;
-		for (line of output) {
-			// use filter() array method
-			// and return the element which is being looped
-			const newArry = line.filter((a) => a);
-			console.log(newArry); 
-			if (newArry.length > 0) {
-				//csvArry.push(newArry)
-				csvArry.push(line);
-				//delete output[idx]
-				for (x= 0; x < line.length; x++) {
-					console.log(x);
-					if (line[x].length > 0)
-						arryLen[x] +=1; 
-				}
-			}
-			idx+=1;
-		}
-
-			
-		
-		console.log(arryLen);
-		console.log(csvArry);
-		//if (CSV) output = fixUnicode(output);
-		generateTable(csvArry, arryLen);
-
+		removeEmptyLines(csv);
 		var t1 = performance.now();
 		console.log("process_wb "+ (t1 - t0) + " milliseconds.");
 	};
@@ -467,14 +292,23 @@ var do_file = (function() {
 })();
 
 
-
-//document.getElementById('sfont').value = "";
 document.getElementById('xlf').value = ""; 
 
 
 function setSrch(e) {
-	srchType = document.querySelector('input[name = wsrch]:checked').value
-	search_Table()
+	srchType = document.querySelector('input[name = wsrch]:checked').value;
+	search_Table();
+}
+
+function clearTable() {
+    console.log("clearing table")
+	document.getElementById("output").innerHTML = "";
+}
+
+function clearSearch() {
+	console.log("clear");
+	document.getElementById('xsearch').value = "";
+	search_Table();
 }
 
 function showDebug() {
