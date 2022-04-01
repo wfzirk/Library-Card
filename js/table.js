@@ -6,6 +6,7 @@ var xrefCol = 3;
 var noCols = 3;
 	
 // find font column and unicode column	
+/*
 function findCol(arry) {
 	var t0 = performance.now();
 	var found = false;
@@ -44,6 +45,7 @@ function findCol(arry) {
 	var t1 = performance.now();
 	console.log("findCol " + (t1 - t0) + " milliseconds.");
 }
+*/
 
 function generateTable(lines, colLen){
 	console.log('generateTable');
@@ -177,44 +179,46 @@ function search_Table(){
 	var filter =  input.split(' '); 
 	console.log('searchtable',srchType, input)	
 	table = document.getElementById("searchtable");
-	tr = table.getElementsByTagName("tr");
-	for (i = 1; i < tr.length; i++) {		// start row 1
-		td = tr[i].getElementsByTagName("td") ; 
-		var txt = "+";
-		for(j=0 ; j < td.length ; j++) {		// start column 0
-			  let tdata = td[j] ;
-			  if (tdata) {
-				 txt = txt +'+'+ tdata.innerHTML.toUpperCase();
-			  }
-		}
-		//console.log('srch',txt, 'filter',filter);
-		if (srchType === 'word') {  // word search
-			txt = txt +'+';
-			txt = txt.replace(/ /g,'+')
-			txt = txt.replace(/:/g,'+')
-			txt = txt.replace(/,/g,'+')
-			//txt = txt.split('+')
-			
-			var found = true;
-			for(var f = 0; f < filter.length; f++) {
-				if (txt.indexOf('+'+filter[f]+'+')  === -1) { 
-					found = false;
-				}
+	if (table) {
+		tr = table.getElementsByTagName("tr");
+		for (i = 1; i < tr.length; i++) {		// start row 1
+			td = tr[i].getElementsByTagName("td") ; 
+			var txt = "+";
+			for(j=0 ; j < td.length ; j++) {		// start column 0
+				  let tdata = td[j] ;
+				  if (tdata) {
+					 txt = txt +'+'+ tdata.innerHTML.toUpperCase();
+				  }
 			}
-		} else {			// char search
-			var found = true;
-			for(var f = 0; f < filter.length; f++) {
-				if (txt.indexOf(filter[f])  === -1) { 
-					found = false;
+			//console.log('srch',txt, 'filter',filter);
+			if (srchType === 'word') {  // word search
+				txt = txt +'+';
+				txt = txt.replace(/ /g,'+')
+				txt = txt.replace(/:/g,'+')
+				txt = txt.replace(/,/g,'+')
+				//txt = txt.split('+')
+				
+				var found = true;
+				for(var f = 0; f < filter.length; f++) {
+					if (txt.indexOf('+'+filter[f]+'+')  === -1) { 
+						found = false;
+					}
 				}
+			} else {			// char search
+				var found = true;
+				for(var f = 0; f < filter.length; f++) {
+					if (txt.indexOf(filter[f])  === -1) { 
+						found = false;
+					}
+				}
+			}	
+			//found = arrayContains(txt, filter)
+			//console.log(i,input, txt, found)
+			if (found) {
+					tr[i].style.display = "";
+			} else {
+					tr[i].style.display = "none";
 			}
-		}	
-		//found = arrayContains(txt, filter)
-		//console.log(i,input, txt, found)
-		if (found) {
-				tr[i].style.display = "";
-		} else {
-				tr[i].style.display = "none";
 		}
 	}
 }
