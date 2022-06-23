@@ -170,13 +170,28 @@ function removeEmptyLines(arry) {
 	csvArry = [];
 	arryLen = [];
 	maxLen = []
+	colfilter = []
+	colList = ["Title"," Sort Character", "Primary Author", "ISBN", "Dewey Decimal"]
+	
 	output = csvToArray(arry);
 	console.log(output.length, output[0].length);
-
+	console.log(output)
 	for (x= 0; x < output[2].length; x++) {
 		arryLen.push(0);
 		maxLen.push(0);
 	}
+
+	console.log('remove coummns', output[0])
+	line0 = output[0]
+	colidx = []
+	for (x = 0; x < line0.length; x++) {
+		//console.log(x, line0[x])
+		if (colList.includes(line0[x])) {
+			colidx.push(x)			// get list of indexes of specific columns
+		}
+
+	}
+	console.log(colidx)
 
 	for (line of output) {
 		// use filter() array method
@@ -184,11 +199,17 @@ function removeEmptyLines(arry) {
 		const newArry = line.filter((a) => a);
 		//console.log(newArry); 
 		if (newArry.length > 0) {
-			csvArry.push(line);
-			for (x= 0; x < line.length; x++) {
-				if (line[x].length > 0)
+			newline = []
+			for (x = 0; x < line.length; x++) {
+				if (colidx.includes(x)) {
+					newline.push(line[x])
+				}	
+			}
+			csvArry.push(newline);
+			for (x= 0; x < newline.length; x++) {
+				if (newline[x].length > 0)
 					arryLen[x] +=1; 
-					maxLen[x] = Math.max(line[x].length, maxLen[x]);
+					maxLen[x] = Math.max(newline[x].length, maxLen[x]);
 			}
 		}
 	}
@@ -339,37 +360,17 @@ function showDebug() {
 
 //https://stackoverflow.com/questions/61705069/automatically-load-csv-txt-file-from-local-drive-into-html-page-as-table-javascr
 function processData(csv) {
-	console.log(csv)
+	//console.log(csv)
 	removeEmptyLines(csv)
-	/*
-      let data = csv.split(/\r\n|\n/).map(v => v.split(','));
 
-      let headers = data.shift();
-
-      let table = document.createElement('table');
-
-      let thead = document.createElement('thead');
-      table.appendChild(thead);
-
-      thead.innerHTML = '<tr><th>' + headers.join('</th><th>') + '</th></tr>';
-
-      let tbody = document.createElement('tbody');
-      table.appendChild(tbody);
-
-      for (let row of data) {
-        tbody.innerHTML += '<tr><td>' + row.join('</td><td>') + '</td></tr>';
-      }
-
-      document.body.appendChild(table);
-	*/
     }
 
 // https://stackoverflow.com/questions/61705069/automatically-load-csv-txt-file-from-local-drive-into-html-page-as-table-javascr
-fetch("https://raw.githubusercontent.com/wfzirk/Library-Card/main/Input/librarything.csv")
+
+url = "https://raw.githubusercontent.com/wfzirk/Library-Card/main/Input/librarything.csv"
+fetch(url)
   .then(res => res.text())
   .then(text => processData(text));
-
-
 
 //generateTable(jscsvToArray(csvData));
 
