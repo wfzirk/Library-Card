@@ -4,6 +4,10 @@
 		https://stuk.github.io/jszip/
 		https://oss.sheetjs.com/js-xlsx/
 		https://www.pagecloud.com/blog/how-to-add-custom-fonts-to-any-website
+		
+		access file on github
+	https://stackoverflow.com/questions/61705069/automatically-load-csv-txt-file-from-local-drive-into-html-page-as-table-javascr
+		https://raw.githubusercontent.com/wfzirk/Library-Card/main/Input/lt20220623.csv
 -->
 <html>
 <head>
@@ -331,6 +335,41 @@ function showDebug() {
 		document.getElementById("output").innerHTML = ""
 	}
 }
+
+
+//https://stackoverflow.com/questions/61705069/automatically-load-csv-txt-file-from-local-drive-into-html-page-as-table-javascr
+function processData(csv) {
+	console.log(csv)
+	removeEmptyLines(csv)
+	/*
+      let data = csv.split(/\r\n|\n/).map(v => v.split(','));
+
+      let headers = data.shift();
+
+      let table = document.createElement('table');
+
+      let thead = document.createElement('thead');
+      table.appendChild(thead);
+
+      thead.innerHTML = '<tr><th>' + headers.join('</th><th>') + '</th></tr>';
+
+      let tbody = document.createElement('tbody');
+      table.appendChild(tbody);
+
+      for (let row of data) {
+        tbody.innerHTML += '<tr><td>' + row.join('</td><td>') + '</td></tr>';
+      }
+
+      document.body.appendChild(table);
+	*/
+    }
+
+// https://stackoverflow.com/questions/61705069/automatically-load-csv-txt-file-from-local-drive-into-html-page-as-table-javascr
+fetch("https://raw.githubusercontent.com/wfzirk/Library-Card/main/Input/librarything.csv")
+  .then(res => res.text())
+  .then(text => processData(text));
+
+
 
 //generateTable(jscsvToArray(csvData));
 
